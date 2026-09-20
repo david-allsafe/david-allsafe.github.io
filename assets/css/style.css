@@ -1,4 +1,4 @@
-﻿:root {
+:root {
   --bg: #0c100e;
   --fg: #c5d1c8;
   --dim: #7a8c80;
@@ -28,6 +28,10 @@ a:hover { color: #fff; }
 .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end; padding: 4rem 0; }
 .hero h1 { font-size: clamp(2.4rem, 9vw, 6rem); margin: 0 0 3rem; }
 
+@media (max-width: 600px) {
+  .hero { min-height: 60vh; padding: 3rem 0 2rem; }
+}
+
 .cursor {
   display: inline-block;
   width: 0.5em;
@@ -46,3 +50,8 @@ a:hover { color: #fff; }
 .menu a { text-decoration: none; }
 
 section { padding: 6rem 0; }
+
+.certs { list-style: none; padding: 0; margin: 1rem 0; }
+.certs li { margin-bottom: 0.6rem; }
+.certs .status { color: var(--dim); font-size: 0.85rem; }
+.certs .status.done { color: var(--accent); }
