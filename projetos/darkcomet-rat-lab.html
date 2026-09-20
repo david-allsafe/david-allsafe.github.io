@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DarkComet RAT Lab | David Miranda</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    .yt-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;max-width:100%;margin:1.5rem 0;}
+    .yt-wrap iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0;}
+    .tbl{width:100%;border-collapse:collapse;margin:1rem 0;font-size:0.9rem;}
+    .tbl th,.tbl td{border:1px solid currentColor;padding:0.4rem 0.7rem;text-align:left;opacity:0.9;}
+    .phases{list-style:none;padding-left:0;margin:1rem 0;}
+    .phases li{margin-bottom:0.5rem;}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+
+    <section class="hero">
+      <p class="prompt"><span class="who">david@allsafe</span>:~$ cat projetos/darkcomet-rat-lab.md</p>
+      <h1>DarkComet RAT<span class="cursor"></span></h1>
+      <p class="out">Trojans – Remote Access Trojan | Projeto II – Laboratório de Hardware para Cibersegurança | ISTEC Lisboa, 2025/2026</p>
+      <nav class="menu">
+        <a href="../index.html#projetos">./voltar</a>
+      </nav>
+    </section>
+
+    <section id="resumo">
+      <p class="prompt"><span class="who">david@allsafe</span>:~$ cat resumo.txt</p>
+      <p class="out">Laboratório prático de análise do DarkComet RAT v5.3, reproduzindo o ciclo completo de um ataque: configuração da infraestrutura C2, geração do payload, entrega, ligação estabelecida, controlo remoto com exfiltração de informação e encerramento remoto do sistema comprometido.</p>
+      <p class="out">Ambiente totalmente isolado — duas VMs Windows 7 SP1 em rede interna VirtualBox sem acesso à internet ("labrede", 192.168.100.0/24) — sem qualquer distribuição do payload fora do laboratório.</p>
+    </section>
+
+    <section id="ambiente">
+      <p class="prompt"><span class="who">david@allsafe</span>:~$ cat ambiente.txt</p>
+      <table class="tbl">
+        <tr><th>Máquina</th><th>Função</th><th>IP</th></tr>
+        <tr><td>Win7-Atacante</td><td>Servidor C2 (DarkComet)</td><td>192.168.100.1</td></tr>
+        <tr><td>Win7-Vítima</td><td>Alvo</td><td>192.168.100.2</td></tr>
+      </table>
+      <p class="out">Hipervisor: Oracle VirtualBox (host Windows 11) · Rede: Interna, isolada · Porta C2: 1604/TCP</p>
+    </section>
+
+    <section id="fases">
+      <p class="prompt"><span class="who">david@allsafe</span>:~$ cat fases.log</p>
+      <ol class="phases out">
+        <li><strong>1. Configuração do servidor</strong> — DarkComet a escutar na porta 1604 (Listening, UPnP ativo)</li>
+        <li><strong>2. Geração do stub</strong> — payload minimalista gerado como update.exe, IP corrigido para 192.168.100.1, persistência ativada, disfarçado de atualização legítima</li>
+        <li><strong>3. Preparação da vítima</strong> — transferência via pasta partilhada VirtualBox (substitui vetor real: phishing/USB/drive-by), exceção temporária no Defender do host</li>
+        <li><strong>4. Entrega e execução</strong> — vítima executa o payload; stub liga-se ao C2 na porta 1604</li>
+        <li><strong>5. Ligação estabelecida</strong> — vítima surge no painel com IP, SO, RAM, idioma e latência em tempo real</li>
+        <li><strong>6. Controlo remoto e exfiltração</strong> — Remote Desktop ativo, recolha de System Info (OS, MAC, SysDir, uptime)</li>
+        <li><strong>7. Encerramento remoto</strong> — shutdown da máquina vítima por comando do atacante</li>
+      </ol>
+    </section>
+
+    <section id="mitre">
+      <p class="prompt"><span class="who">david@allsafe</span>:~$ cat mitre-attck.txt</p>
+      <table class="tbl">
+        <tr><th>Técnica</th><th>ID</th><th>Observado no lab</th></tr>
+        <tr><td>Masquerading</td><td>T1036.005</td><td>Payload nomeado update.exe para simular atualização legítima</td></tr>
+        <tr><td>Boot or Logon Autostart Execution</td><td>T1547.001</td><td>Chave de registo criada pelo stub para persistência</td></tr>
+        <tr><td>Command and Control</td><td>T1071</td><td>Ligação TCP de saída persistente para o C2 (porta 1604)</td></tr>
+        <tr><td>System Information Discovery</td><td>T1082</td><td>Recolha automática de dados do sistema via módulo System Info</td></tr>
+      </table>
+      <p class="out">Referência: <a href="https://attack.mitre.org/software/S0334/" target="_blank" rel="noopener">DarkComet (S0334) — MITRE ATT&CK</a></p>
+    </section>
+
+    <section id="video">
+      <p class="prompt"><span class="who">david@allsafe</span>:~$ play demo.mp4</p>
+      <div class="yt-wrap">
+        <iframe src="https://www.youtube.com/embed/LZj5sGnbuzc" title="DarkComet RAT Lab - demonstração" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </section>
+
+    <section id="conclusao">
+      <p class="prompt"><span class="who">david@allsafe</span>:~$ cat conclusao.txt</p>
+      <p class="out">Uma única ligação TCP de saída na porta 1604 foi suficiente para controlo total do sistema comprometido — reforça que a deteção eficaz depende menos do bloqueio de portas e mais da identificação de padrões e assinaturas de protocolo C2.</p>
+    </section>
+
+    <section id="relatorio">
+      <p class="prompt"><span class="who">david@allsafe</span>:~$ ls -la relatorio/</p>
+      <p class="out"><a href="../assets/pdf/darkcomet-rat-lab.pdf" target="_blank">./darkcomet-rat-lab.pdf</a> — relatório técnico completo (enquadramento teórico, configuração passo-a-passo, TTPs e referências)</p>
+    </section>
+
+  </main>
+</body>
+</html>
