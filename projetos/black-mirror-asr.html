@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Black Mirror | David Miranda</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    .tbl{width:100%;border-collapse:collapse;margin:1rem 0;font-size:0.9rem;}
+    .tbl th,.tbl td{border:1px solid currentColor;padding:0.4rem 0.7rem;text-align:left;opacity:0.9;}
+    .phases{list-style:none;padding-left:0;margin:1rem 0;}
+    .phases li{margin-bottom:0.5rem;}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+
+    <section>
+      <p class="prompt"><span class="who">david@allsafe</span>:~$ cat projetos/black-mirror-asr.md</p>
+      <h1>Black Mirror<span class="cursor"></span></h1>
+      <p class="out">Administração de Serviços de Rede | Infraestrutura de serviços de rede para uma organização | ISTEC Lisboa, 2025/2026</p>
+      <nav class="menu">
+        <a href="../index.html#projetos">./voltar</a>
+      </nav>
+    </section>
+
+    <section id="resumo">
+      <p class="prompt"><span class="who">david@allsafe</span>:~$ cat resumo.txt</p>
+      <p class="out">Infraestrutura de rede completa para a "Black Mirror", uma organização fictícia: firewall/gateway com OPNsense, DNS e DHCP internos, um servidor Ubuntu com portal WordPress publicado, monitorização de disponibilidade com Nagios e deteção de eventos de segurança com um SIEM Wazuh — tudo virtualizado em Hyper-V, sobre a LAN 10.10.10.0/24 e o domínio blackmirror.local.</p>
+      <p class="out">Testado de ponta a ponta: um cliente recebe IP por DHCP, resolve o domínio interno via DNS e acede ao WordPress através da firewall, com o evento a chegar ao Wazuh — incluindo um teste de acesso externo ao portal via port-forward na OPNsense, com a LAN desativada.</p>
+    </section>
+
+    <section id="topologia">
+      <p class="prompt"><span class="who">david@allsafe</span>:~$ cat topologia.txt</p>
+      <table class="tbl">
+        <tr><th>Máquina</th><th>Função</th><th>IP</th></tr>
+        <tr><td>OPNsense-fw</td><td>Firewall / gateway, DNS + DHCP</td><td>10.10.10.1 (LAN)</td></tr>
+        <tr><td>srv-core</td><td>Ubuntu Server — serviços core</td><td>10.10.10.10</td></tr>
+        <tr><td>srv-web</td><td>Ubuntu + WordPress (LAMP + Redis)</td><td>10.10.10.20</td></tr>
+        <tr><td>srv-nagios</td><td>Monitorização — Nagios Core</td><td>10.10.10.30</td></tr>
+        <tr><td>srv-wazuh</td><td>SIEM — Wazuh (CentOS Stream)</td><td>10.10.10.40</td></tr>
+        <tr><td>cliente</td><td>Estação de teste (DHCP)</td><td>10.10.10.100–200</td></tr>
+      </table>
+      <p class="out">Hipervisor: Microsoft Hyper-V · LAN: 10.10.10.0/24 · Domínio: blackmirror.local</p>
+    </section>
+
+    <section id="servicos">
+      <p class="prompt"><span class="who">david@allsafe</span>:~$ cat servicos.log</p>
+      <ol class="phases out">
+        <li><strong>1. Firewall / gateway (OPNsense)</strong> — WAN com NAT de saída, LAN em 10.10.10.1/24, base de todos os serviços seguintes</li>
+        <li><strong>2. DNS interno</strong> — Dnsmasq na OPNsense com Unbound como resolver recursivo; registos A e PTR para os servidores no domínio blackmirror.local</li>
+        <li><strong>3. DHCP</strong> — intervalo 10.10.10.100–200 na LAN, entregando gateway, DNS e domínio aos clientes</li>
+        <li><strong>4. Servidor Ubuntu (srv-core)</strong> — IP fixo via netplan e acesso remoto por SSH, base para os serviços seguintes</li>
+        <li><strong>5. Servidor Web / WordPress (srv-web)</strong> — stack LAMP dedicado, base de dados e utilizador de menor privilégio, cache Redis e publicação via port-forward na OPNsense</li>
+        <li><strong>6. Monitorização (Nagios)</strong> — disponibilidade dos hosts e serviços (PING/HTTP/SSH/disco), com a firewall monitorizada por ICMP como controlo compensatório</li>
+        <li><strong>7. SIEM (Wazuh)</strong> — plataforma all-in-one com agentes nos hosts Ubuntu, deteção de integridade de ficheiros (FIM), registos e vulnerabilidades</li>
+      </ol>
+    </section>
+
+    <section id="desafios">
+      <p class="prompt"><span class="who">david@allsafe</span>:~$ cat desafios.txt</p>
+      <p class="out">Vários guias assumiam VirtualBox/VMware, exigindo adaptações a Hyper-V: nomes de interface hn0/hn1 em vez de em0/em1 na OPNsense, MacAddressSpoofing desligado por defeito a bloquear o tráfego L2, e Secure Boot a rejeitar o arranque da VM CentOS do Wazuh.</p>
+      <p class="out">Diagnóstico consistente por camadas (L2 → firewall → socket → cliente) para isolar falhas — por exemplo, um falso timeout de acesso WAN ao WordPress que se revelou seleção incorreta de interface no host, confirmada com Test-NetConnection em vez do curl local.</p>
+      <p class="out">A OPNsense ficou fora do âmbito do SNMP e dos agentes Wazuh (que exigiam atualizar o firewall e não têm agente FreeBSD, respetivamente), compensado com monitorização por ICMP no Nagios.</p>
+    </section>
+
+    <section id="conclusao">
+      <p class="prompt"><span class="who">david@allsafe</span>:~$ cat conclusao.txt</p>
+      <p class="out">O modelo reproduz o ciclo instalar → gerir → observar de uma PME típica: perímetro único com firewall/gateway, serviços core centralizados, aplicação de negócio publicada e uma camada de observabilidade e segurança — assente em segregação de funções, menor privilégio e defesa em profundidade.</p>
+      <p class="out">Melhorias futuras: segmentação em VLANs, alta disponibilidade na OPNsense (CARP) e nos serviços DNS/DHCP, HTTPS/TLS no WordPress, centralização de logs com alertas personalizados no Wazuh e backups automatizados com plano de recuperação.</p>
+    </section>
+
+    <section id="relatorio">
+      <p class="prompt"><span class="who">david@allsafe</span>:~$ ls -la relatorio/</p>
+      <p class="out"><a href="../assets/pdf/black-mirror-asr.pdf" target="_blank">./black-mirror-asr.pdf</a> — relatório técnico completo (enquadramento, implementação, evidências e MITRE quando aplicável)</p>
+    </section>
+
+  </main>
+</body>
+</html>
