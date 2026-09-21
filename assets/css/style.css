@@ -42,7 +42,7 @@ a:hover { color: #fff; }
 }
 @keyframes blink { 50% { opacity: 0; } }
 
-.prompt { margin: 0 0 0.4rem; color: var(--dim); }
+.prompt { margin: 0 0 0.4rem; color: var(--accent); }
 .prompt .who { color: var(--accent); }
 .out { margin: 0 0 1rem; }
 
