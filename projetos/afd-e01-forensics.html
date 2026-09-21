@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Análise Forense Digital — E01 | David Miranda</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    .tbl{width:100%;border-collapse:collapse;margin:1rem 0;font-size:0.9rem;}
+    .tbl th,.tbl td{border:1px solid currentColor;padding:0.4rem 0.7rem;text-align:left;opacity:0.9;}
+    .phases{list-style:none;padding-left:0;margin:1rem 0;}
+    .phases li{margin-bottom:0.5rem;}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+
+    <section>
+      <p class="prompt"><span class="who">david@allsafe</span>:~$ cat projetos/afd-e01-forensics.md</p>
+      <h1>Análise Forense Digital — E01<span class="cursor"></span></h1>
+      <p class="out">Investigação de um incidente de exfiltração interna, a partir de uma imagem pericial (E01) | ISTEC Lisboa, 2025/2026 | Docente: Ivo Rosa</p>
+      <nav class="menu">
+        <a href="../index.html#projetos">./voltar</a>
+      </nav>
+    </section>
+
+    <section id="resumo">
+      <p class="prompt"><span class="who">david@allsafe</span>:~$ cat resumo.txt</p>
+      <p class="out">Trabalho de "dual-role": um grupo constrói um cenário de ataque, escondendo dados e apagando vestígios; outro investiga a imagem resultante. Nesta fase, investiguei uma imagem pericial ESD-USB (E01, FAT32, 32 768 MB) recebida de outro grupo, num cenário de ameaça interna (insider threat) — exfiltração de dados a partir de uma conta com acesso legítimo, dissimulada de atividade normal.</p>
+      <p class="out">Segui as orientações do NIST SP 800-86 e da ISO/IEC 27037:2012, documentando cada extração com o respetivo hash. Identifiquei três técnicas de dissimulação distintas, recuperei dois artefactos exfiltrados e reconstruí a narrativa completa do incidente a partir de um log apagado — sem nunca ultrapassar o que a prova permite afirmar.</p>
+    </section>
+
+    <section id="metodologia">
+      <p class="prompt"><span class="who">david@allsafe</span>:~$ cat integridade.txt</p>
+      <table class="tbl">
+        <tr><th>Hash</th><th>Valor de referência</th><th>Recalculado</th><th>Resultado</th></tr>
+        <tr><td>MD5</td><td>2e7b64e3…dfe3c5</td><td>2e7b64e3…dfe3c5</td><td>Match</td></tr>
+        <tr><td>SHA-1</td><td>38a6dacf…09bf95</td><td>38a6dacf…09bf95</td><td>Match</td></tr>
+      </table>
+      <p class="out">Não aceitei os hashes do relatório do grupo atacante: recalculei-os de forma independente em dois ambientes (FTK Imager no Windows, ewfverify no Kali), confirmando a cadeia de custódia antes de examinar a imagem.</p>
+    </section>
+
+    <section id="ferramentas">
+      <p class="prompt"><span class="who">david@allsafe</span>:~$ cat ferramentas.txt</p>
+      <p class="out">FTK Imager · Autopsy (Extension Mismatch, Suspicious Items, Keyword Search) · ewfmount / ewfverify · The Sleuth Kit (icat, fls, fsstat, istat) · binwalk · exiftool · file · foremost · strings · dd · base64 · unzip / xmllint</p>
+    </section>
+
+    <section id="achados">
+      <p class="prompt"><span class="who">david@allsafe</span>:~$ cat achados.log</p>
+      <ol class="phases out">
+        <li><strong>1. Extensão trocada</strong> — um ficheiro .png com assinatura ZIP/OOXML (50 4B 03 04): uma folha de cálculo com 20 contas do domínio trhplus-demo.local, credenciais em texto claro</li>
+        <li><strong>2. Polyglot (anexação)</strong> — um JPEG válido a esconder um .xlsx completo a partir do offset 0xBD72A; extraído por dd, revelou um orçamento anual com fórmulas ativas</li>
+        <li><strong>3. Scripts-isco</strong> — Credential Stealer.bat e Data Stealer.bat, com nomes ameaçadores mas conteúdo inofensivo (só echo): engodo para desviar a atenção do investigador</li>
+        <li><strong>4. Falso controlo de acesso</strong> — um Main.bat apagado, recuperado por strings no espaço não alocado, com a password "Secret123" em texto claro no próprio código</li>
+        <li><strong>5. Prova central</strong> — um log de exfiltração apagado, recuperado por icat e descodificado com base64, documentando uma rotina automatizada: varrimento da pasta Financeiro, compressão/ofuscação, transferência para a pen e limpeza de Event Logs</li>
+      </ol>
+      <p class="out">Validei os achados de forma cruzada: o foremost recuperou por carving os mesmos dois artefactos já extraídos por metadados/offset no Autopsy e no Kali, com hashes SHA-256 coincidentes.</p>
+    </section>
+
+    <section id="limites">
+      <p class="prompt"><span class="who">david@allsafe</span>:~$ cat limites.txt</p>
+      <p class="out">Confirmado: três técnicas de dissimulação, exfiltração efetiva de dois artefactos OOXML, destruição deliberada de vestígios (fase CLEANUP do log) e validação cruzada entre ferramentas.</p>
+      <p class="out">Por provar: a fonte é um volume de dados sem sistema operativo, sem os registos do Windows que ligariam a ação a uma pessoa — o estado "Disabled" da conta associada vem da própria tabela exfiltrada, não do sistema. Não apontei um culpado direto porque a imagem não o permite; recusar adivinhar sem provas foi uma opção deliberada, não uma limitação da investigação.</p>
+    </section>
+
+    <section id="relatorio">
+      <p class="prompt"><span class="who">david@allsafe</span>:~$ ls -la relatorio/</p>
+      <p class="out"><a href="../assets/pdf/afd-e01-forensics.pdf" target="_blank">./afd-e01-forensics.pdf</a> — relatório técnico completo (metodologia, evidências e conclusões)</p>
+    </section>
+
+  </main>
+</body>
+</html>
