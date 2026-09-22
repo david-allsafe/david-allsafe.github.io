@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ISTEC POS | David Miranda</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+  <main class="wrap">
+
+    <section>
+      <p class="prompt">~$ cat projetos/istec-pos.md</p>
+      <h1>ISTEC POS<span class="cursor"></span></h1>
+      <p class="out">Aplicação de ponto de venda com interface gráfica em Python | Introdução à Programação de Scripts | ISTEC Lisboa, 2025/2026</p>
+      <nav class="menu">
+        <a href="../index.html#projetos">./voltar</a>
+      </nav>
+    </section>
+
+    <section id="resumo">
+      <p class="prompt">~$ cat resumo.txt</p>
+      <p class="out">Aplicação POS (Point of Sale) para um pequeno quiosque/cafetaria, desenvolvida em Python com PyQt5. Autenticação com perfis separados (Administrador e Vendedor), gestão de vendedores e produtos, vendas com cálculo automático de IVA, emissão de recibo, histórico de vendas e um painel de estatísticas com gráficos (top 5 produtos, vendas por vendedor).</p>
+      <p class="out">Persistência em JSON, com testes unitários ao módulo central (system_manager) e documentação gerada com pdoc.</p>
+    </section>
+
+    <section id="funcionalidades">
+      <p class="prompt">~$ cat funcionalidades.txt</p>
+      <ul class="certs out">
+        <li>Login com dois perfis (Administrador e Vendedor) e recuperação de password simulada</li>
+        <li>Gestão de vendedores e produtos (código, nome, preço, categoria, imagem)</li>
+        <li>Vendas por categoria, carrinho com totais por linha e IVA calculado automaticamente</li>
+        <li>Histórico de vendas e emissão de recibo</li>
+        <li>Estatísticas: gráfico de pizza (top 5 produtos) e gráfico de barras (vendas por vendedor)</li>
+      </ul>
+    </section>
+
+    <section id="tecnologias">
+      <p class="prompt">~$ cat tecnologias.txt</p>
+      <p class="out">Python 3 · PyQt5 · matplotlib · JSON · pdoc · unittest</p>
+    </section>
+
+    <section id="repositorio">
+      <p class="prompt">~$ git remote -v</p>
+      <p class="out"><a class="link-plain" href="https://github.com/david-allsafe/ISTECPos---Point-of-Sale" target="_blank" rel="noopener">github.com/david-allsafe/ISTECPos---Point-of-Sale</a> — código-fonte, README e instruções para correr localmente</p>
+    </section>
+
+  </main>
+</body>
+</html>
