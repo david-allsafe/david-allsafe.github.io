@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-PT">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Digital Forensics — E01 | David Miranda</title>
+  <title>Análise Forense Digital: E01 | David Miranda</title>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
   <style>
     .tbl{width:100%;border-collapse:collapse;margin:1rem 0;font-size:0.9rem;}
     .tbl th,.tbl td{border:1px solid currentColor;padding:0.4rem 0.7rem;text-align:left;opacity:0.9;}
@@ -17,60 +17,60 @@
   <main class="wrap">
 
     <section>
-      <p class="prompt"><span class="who">david@allsafe</span>:~$ cat projects/afd-e01-forensics.md</p>
-      <h1>Digital Forensics — E01<span class="cursor"></span></h1>
-      <p class="out">Investigation of an internal data-exfiltration incident, from a forensic disk image (E01) | ISTEC Lisbon, 2025/2026 | Instructor: Ivo Rosa</p>
+      <p class="prompt"><span class="who">david@allsafe</span>:~$ cat projetos/afd-e01-forensics.md</p>
+      <h1>Análise Forense Digital: E01<span class="cursor"></span></h1>
+      <p class="out">Investigação de um incidente de exfiltração interna, a partir de uma imagem pericial (E01) | ISTEC Lisboa, 2025/2026 | Docente: Ivo Rosa</p>
       <p class="prompt">~$ cat highlights.txt</p>
-      <p class="out"><strong class="label-accent">32,768 MB forensic image · 3 concealment techniques · 2 exfiltrated artifacts recovered · NIST SP 800-86 + ISO/IEC 27037</strong></p>
+      <p class="out"><strong class="label-accent">Imagem pericial de 32 768 MB · 3 técnicas de dissimulação · 2 artefactos exfiltrados recuperados · NIST SP 800-86 + ISO/IEC 27037</strong></p>
       <nav class="menu">
-        <a href="../index.html#projects">./back</a>
-        <a href="../../projetos/afd-e01-forensics.html">PT</a>
+        <a href="../index.html#projetos">./voltar</a>
+        <a href="../en/projetos/afd-e01-forensics.html">EN</a>
       </nav>
     </section>
 
-    <section id="summary">
-      <p class="prompt">~$ cat summary.txt</p>
-      <p class="out">A "dual-role" assignment: one group builds an attack scenario, hiding data and erasing traces; another investigates the resulting image. In this phase, I investigated a forensic ESD-USB image (E01, FAT32, 32,768 MB) received from another group, in an insider-threat scenario — data exfiltration from an account with legitimate access, disguised as normal activity.</p>
-      <p class="out">I followed NIST SP 800-86 and ISO/IEC 27037:2012 guidance, documenting each extraction with its corresponding hash. I identified three distinct concealment techniques, recovered two exfiltrated artifacts, and reconstructed the full incident narrative from a deleted log — without ever overstating what the evidence actually supports.</p>
+    <section id="resumo">
+      <p class="prompt">~$ cat resumo.txt</p>
+      <p class="out">Trabalho de "dual-role": um grupo constrói um cenário de ataque, escondendo dados e apagando vestígios; outro investiga a imagem resultante. Nesta fase, investiguei uma imagem pericial ESD-USB (E01, FAT32, 32 768 MB) recebida de outro grupo, num cenário de ameaça interna (insider threat): exfiltração de dados a partir de uma conta com acesso legítimo, dissimulada de atividade normal.</p>
+      <p class="out">Segui as orientações do NIST SP 800-86 e da ISO/IEC 27037:2012, documentando cada extração com o respetivo hash. Identifiquei três técnicas de dissimulação distintas, recuperei dois artefactos exfiltrados e reconstruí a narrativa completa do incidente a partir de um log apagado, sem nunca ultrapassar o que a prova permite afirmar.</p>
     </section>
 
-    <section id="methodology">
-      <p class="prompt">~$ cat integrity.txt</p>
+    <section id="metodologia">
+      <p class="prompt">~$ cat integridade.txt</p>
       <table class="tbl">
-        <tr><th>Hash</th><th>Reference value</th><th>Recomputed</th><th>Result</th></tr>
+        <tr><th>Hash</th><th>Valor de referência</th><th>Recalculado</th><th>Resultado</th></tr>
         <tr><td>MD5</td><td>2e7b64e3…dfe3c5</td><td>2e7b64e3…dfe3c5</td><td>Match</td></tr>
         <tr><td>SHA-1</td><td>38a6dacf…09bf95</td><td>38a6dacf…09bf95</td><td>Match</td></tr>
       </table>
-      <p class="out">I did not take the attacking group's report hashes at face value: I recomputed them independently in two environments (FTK Imager on Windows, ewfverify on Kali), confirming chain of custody before examining the image.</p>
+      <p class="out">Não aceitei os hashes do relatório do grupo atacante: recalculei-os de forma independente em dois ambientes (FTK Imager no Windows, ewfverify no Kali), confirmando a cadeia de custódia antes de examinar a imagem.</p>
     </section>
 
-    <section id="tools">
-      <p class="prompt">~$ cat tools.txt</p>
+    <section id="ferramentas">
+      <p class="prompt">~$ cat ferramentas.txt</p>
       <p class="out">FTK Imager · Autopsy (Extension Mismatch, Suspicious Items, Keyword Search) · ewfmount / ewfverify · The Sleuth Kit (icat, fls, fsstat, istat) · binwalk · exiftool · file · foremost · strings · dd · base64 · unzip / xmllint</p>
     </section>
 
-    <section id="findings">
-      <p class="prompt">~$ cat findings.log</p>
+    <section id="achados">
+      <p class="prompt">~$ cat achados.log</p>
       <ol class="phases out">
-        <li><strong>1. Swapped extension</strong> — a .png file with a ZIP/OOXML signature (50 4B 03 04): a spreadsheet with 20 accounts from the trhplus-demo.local domain, plaintext credentials</li>
-        <li><strong>2. Polyglot (appended data)</strong> — a valid JPEG hiding a full .xlsx starting at offset 0xBD72A; extracted with dd, revealing an annual budget with live formulas</li>
-        <li><strong>3. Decoy scripts</strong> — Credential Stealer.bat and Data Stealer.bat, with threatening names but harmless content (just echo): a decoy to draw the investigator's attention away</li>
-        <li><strong>4. Fake access control</strong> — a deleted Main.bat, recovered via strings from unallocated space, with the password "Secret123" in plaintext inside the code itself</li>
-        <li><strong>5. Central evidence</strong> — a deleted exfiltration log, recovered with icat and decoded from base64, documenting an automated routine: scanning the Financeiro folder, compressing/obfuscating, transferring to the USB drive, and clearing Event Logs</li>
+        <li><strong>1. Extensão trocada</strong>: um ficheiro .png com assinatura ZIP/OOXML (50 4B 03 04): uma folha de cálculo com 20 contas do domínio trhplus-demo.local, credenciais em texto claro</li>
+        <li><strong>2. Polyglot (anexação)</strong>: um JPEG válido a esconder um .xlsx completo a partir do offset 0xBD72A; extraído por dd, revelou um orçamento anual com fórmulas ativas</li>
+        <li><strong>3. Scripts-isco</strong>: Credential Stealer.bat e Data Stealer.bat, com nomes ameaçadores mas conteúdo inofensivo (só echo): engodo para desviar a atenção do investigador</li>
+        <li><strong>4. Falso controlo de acesso</strong>: um Main.bat apagado, recuperado por strings no espaço não alocado, com a password "Secret123" em texto claro no próprio código</li>
+        <li><strong>5. Prova central</strong>: um log de exfiltração apagado, recuperado por icat e descodificado com base64, documentando uma rotina automatizada: varrimento da pasta Financeiro, compressão/ofuscação, transferência para a pen e limpeza de Event Logs</li>
       </ol>
-      <p class="out">I cross-validated the findings: foremost's carving recovered the same two artifacts already extracted by metadata/offset in Autopsy and on Kali, with matching SHA-256 hashes.</p>
+      <p class="out">Validei os achados de forma cruzada: o foremost recuperou por carving os mesmos dois artefactos já extraídos por metadados/offset no Autopsy e no Kali, com hashes SHA-256 coincidentes.</p>
     </section>
 
-    <section id="limitations">
-      <p class="prompt">~$ cat limitations.txt</p>
-      <p class="out">Confirmed: three concealment techniques, effective exfiltration of two OOXML artifacts, deliberate destruction of evidence (the log's CLEANUP phase), and cross-tool validation.</p>
-      <p class="out">Not proven: the source is a data volume with no operating system, so there are no Windows logs to tie the action to a specific person — the "Disabled" status of the associated account comes from the exfiltrated table itself, not from the system. I did not name a direct culprit because the image does not support that claim; refusing to guess without evidence was a deliberate choice, not a limitation of the investigation.</p>
+    <section id="limites">
+      <p class="prompt">~$ cat limites.txt</p>
+      <p class="out">Confirmado: três técnicas de dissimulação, exfiltração efetiva de dois artefactos OOXML, destruição deliberada de vestígios (fase CLEANUP do log) e validação cruzada entre ferramentas.</p>
+      <p class="out">Por provar: a fonte é um volume de dados sem sistema operativo, sem os registos do Windows que ligariam a ação a uma pessoa; o estado "Disabled" da conta associada vem da própria tabela exfiltrada, não do sistema. Não apontei um culpado direto porque a imagem não o permite; recusar adivinhar sem provas foi uma opção deliberada, não uma limitação da investigação.</p>
     </section>
 
-    <section id="report">
-      <p class="prompt">~$ ls -la report/</p>
-      <p class="out"><a href="../../assets/pdf/afd-e01-forensics-slides.pdf" target="_blank">./afd-e01-forensics-slides.pdf</a> — executive version (slides), for a quick read (in Portuguese)</p>
-      <p class="out"><a href="../../assets/pdf/afd-e01-forensics.pdf" target="_blank">./afd-e01-forensics.pdf</a> — full technical report (methodology, evidence and references — in Portuguese)</p>
+    <section id="relatorio">
+      <p class="prompt">~$ ls -la relatorio/</p>
+      <p class="out"><a href="../assets/pdf/afd-e01-forensics-slides.pdf" target="_blank">./afd-e01-forensics-slides.pdf</a>: versão executiva (slides), para leitura rápida</p>
+      <p class="out"><a href="../assets/pdf/afd-e01-forensics.pdf" target="_blank">./afd-e01-forensics.pdf</a>: relatório técnico completo (metodologia, evidências e referências)</p>
     </section>
 
   </main>

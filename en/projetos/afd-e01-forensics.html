@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Digital Forensics — E01 | David Miranda</title>
+  <title>Digital Forensics: E01 | David Miranda</title>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../assets/css/style.css">
   <style>
@@ -18,7 +18,7 @@
 
     <section>
       <p class="prompt"><span class="who">david@allsafe</span>:~$ cat projects/afd-e01-forensics.md</p>
-      <h1>Digital Forensics — E01<span class="cursor"></span></h1>
+      <h1>Digital Forensics: E01<span class="cursor"></span></h1>
       <p class="out">Investigation of an internal data-exfiltration incident, from a forensic disk image (E01) | ISTEC Lisbon, 2025/2026 | Instructor: Ivo Rosa</p>
       <p class="prompt">~$ cat highlights.txt</p>
       <p class="out"><strong class="label-accent">32,768 MB forensic image · 3 concealment techniques · 2 exfiltrated artifacts recovered · NIST SP 800-86 + ISO/IEC 27037</strong></p>
@@ -30,8 +30,8 @@
 
     <section id="summary">
       <p class="prompt">~$ cat summary.txt</p>
-      <p class="out">A "dual-role" assignment: one group builds an attack scenario, hiding data and erasing traces; another investigates the resulting image. In this phase, I investigated a forensic ESD-USB image (E01, FAT32, 32,768 MB) received from another group, in an insider-threat scenario — data exfiltration from an account with legitimate access, disguised as normal activity.</p>
-      <p class="out">I followed NIST SP 800-86 and ISO/IEC 27037:2012 guidance, documenting each extraction with its corresponding hash. I identified three distinct concealment techniques, recovered two exfiltrated artifacts, and reconstructed the full incident narrative from a deleted log — without ever overstating what the evidence actually supports.</p>
+      <p class="out">A "dual-role" assignment: one group builds an attack scenario, hiding data and erasing traces; another investigates the resulting image. In this phase, I investigated a forensic ESD-USB image (E01, FAT32, 32,768 MB) received from another group, in an insider-threat scenario: data exfiltration from an account with legitimate access, disguised as normal activity.</p>
+      <p class="out">I followed NIST SP 800-86 and ISO/IEC 27037:2012 guidance, documenting each extraction with its corresponding hash. I identified three distinct concealment techniques, recovered two exfiltrated artifacts, and reconstructed the full incident narrative from a deleted log, without ever overstating what the evidence actually supports.</p>
     </section>
 
     <section id="methodology">
@@ -52,11 +52,11 @@
     <section id="findings">
       <p class="prompt">~$ cat findings.log</p>
       <ol class="phases out">
-        <li><strong>1. Swapped extension</strong> — a .png file with a ZIP/OOXML signature (50 4B 03 04): a spreadsheet with 20 accounts from the trhplus-demo.local domain, plaintext credentials</li>
-        <li><strong>2. Polyglot (appended data)</strong> — a valid JPEG hiding a full .xlsx starting at offset 0xBD72A; extracted with dd, revealing an annual budget with live formulas</li>
-        <li><strong>3. Decoy scripts</strong> — Credential Stealer.bat and Data Stealer.bat, with threatening names but harmless content (just echo): a decoy to draw the investigator's attention away</li>
-        <li><strong>4. Fake access control</strong> — a deleted Main.bat, recovered via strings from unallocated space, with the password "Secret123" in plaintext inside the code itself</li>
-        <li><strong>5. Central evidence</strong> — a deleted exfiltration log, recovered with icat and decoded from base64, documenting an automated routine: scanning the Financeiro folder, compressing/obfuscating, transferring to the USB drive, and clearing Event Logs</li>
+        <li><strong>1. Swapped extension</strong>: a .png file with a ZIP/OOXML signature (50 4B 03 04): a spreadsheet with 20 accounts from the trhplus-demo.local domain, plaintext credentials</li>
+        <li><strong>2. Polyglot (appended data)</strong>: a valid JPEG hiding a full .xlsx starting at offset 0xBD72A; extracted with dd, revealing an annual budget with live formulas</li>
+        <li><strong>3. Decoy scripts</strong>: Credential Stealer.bat and Data Stealer.bat, with threatening names but harmless content (just echo): a decoy to draw the investigator's attention away</li>
+        <li><strong>4. Fake access control</strong>: a deleted Main.bat, recovered via strings from unallocated space, with the password "Secret123" in plaintext inside the code itself</li>
+        <li><strong>5. Central evidence</strong>: a deleted exfiltration log, recovered with icat and decoded from base64, documenting an automated routine: scanning the Financeiro folder, compressing/obfuscating, transferring to the USB drive, and clearing Event Logs</li>
       </ol>
       <p class="out">I cross-validated the findings: foremost's carving recovered the same two artifacts already extracted by metadata/offset in Autopsy and on Kali, with matching SHA-256 hashes.</p>
     </section>
@@ -64,13 +64,13 @@
     <section id="limitations">
       <p class="prompt">~$ cat limitations.txt</p>
       <p class="out">Confirmed: three concealment techniques, effective exfiltration of two OOXML artifacts, deliberate destruction of evidence (the log's CLEANUP phase), and cross-tool validation.</p>
-      <p class="out">Not proven: the source is a data volume with no operating system, so there are no Windows logs to tie the action to a specific person — the "Disabled" status of the associated account comes from the exfiltrated table itself, not from the system. I did not name a direct culprit because the image does not support that claim; refusing to guess without evidence was a deliberate choice, not a limitation of the investigation.</p>
+      <p class="out">Not proven: the source is a data volume with no operating system, so there are no Windows logs to tie the action to a specific person; the "Disabled" status of the associated account comes from the exfiltrated table itself, not from the system. I did not name a direct culprit because the image does not support that claim; refusing to guess without evidence was a deliberate choice, not a limitation of the investigation.</p>
     </section>
 
     <section id="report">
       <p class="prompt">~$ ls -la report/</p>
-      <p class="out"><a href="../../assets/pdf/afd-e01-forensics-slides.pdf" target="_blank">./afd-e01-forensics-slides.pdf</a> — executive version (slides), for a quick read (in Portuguese)</p>
-      <p class="out"><a href="../../assets/pdf/afd-e01-forensics.pdf" target="_blank">./afd-e01-forensics.pdf</a> — full technical report (methodology, evidence and references — in Portuguese)</p>
+      <p class="out"><a href="../../assets/pdf/afd-e01-forensics-slides.pdf" target="_blank">./afd-e01-forensics-slides.pdf</a>: executive version (slides), for a quick read (in Portuguese)</p>
+      <p class="out"><a href="../../assets/pdf/afd-e01-forensics.pdf" target="_blank">./afd-e01-forensics.pdf</a>: full technical report (methodology, evidence and references, in Portuguese)</p>
     </section>
 
   </main>

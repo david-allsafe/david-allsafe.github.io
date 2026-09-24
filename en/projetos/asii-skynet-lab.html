@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ASII — Skynet, Lda. | David Miranda</title>
+  <title>ASII: Skynet, Lda. | David Miranda</title>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../assets/css/style.css">
   <style>
@@ -18,7 +18,7 @@
 
     <section>
       <p class="prompt"><span class="who">david@allsafe</span>:~$ cat projects/asii-skynet-lab.md</p>
-      <h1>ASII — Skynet, Lda.<span class="cursor"></span></h1>
+      <h1>ASII: Skynet, Lda.<span class="cursor"></span></h1>
       <p class="out">Active Directory and Infrastructure Services Implementation | Systems Administration II | ISTEC Lisbon, 2025/2026 | Instructor: João Carlos Rito de Matos</p>
       <p class="prompt">~$ cat highlights.txt</p>
       <p class="out"><strong class="label-accent">4 AD Sites · 2 forests (forest trust) · 3 type-1 hypervisors · 3-2-1 backup rule</strong></p>
@@ -38,12 +38,12 @@
       <p class="prompt">~$ cat topology.txt</p>
       <table class="tbl">
         <tr><th>Machine</th><th>Role</th><th>IP</th></tr>
-        <tr><td>DC01</td><td>Windows Server 2022 (Desktop) — primary DC, DNS, GC, 5 FSMO roles</td><td>192.168.10.1</td></tr>
-        <tr><td>DC02</td><td>Windows Server 2022 (Core) — secondary DC, DHCP failover partner</td><td>192.168.10.2</td></tr>
-        <tr><td>DC03</td><td>Windows Server 2022 — DC for the istec-net.pt forest</td><td>192.168.10.4</td></tr>
+        <tr><td>DC01</td><td>Windows Server 2022 (Desktop): primary DC, DNS, GC, 5 FSMO roles</td><td>192.168.10.1</td></tr>
+        <tr><td>DC02</td><td>Windows Server 2022 (Core): secondary DC, DHCP failover partner</td><td>192.168.10.2</td></tr>
+        <tr><td>DC03</td><td>Windows Server 2022: DC for the istec-net.pt forest</td><td>192.168.10.4</td></tr>
         <tr><td>GW01</td><td>NAT gateway (WinNAT)</td><td>192.168.10.254</td></tr>
-        <tr><td>PC01</td><td>Windows 11 Pro — domain client, WAC, RSAT</td><td>DHCP</td></tr>
-        <tr><td>HV01 / HV02</td><td>Windows Server 2025 Core — Hyper-V hosts (nested), Replica and Live Migration</td><td>DHCP</td></tr>
+        <tr><td>PC01</td><td>Windows 11 Pro: domain client, WAC, RSAT</td><td>DHCP</td></tr>
+        <tr><td>HV01 / HV02</td><td>Windows Server 2025 Core: Hyper-V hosts (nested), Replica and Live Migration</td><td>DHCP</td></tr>
       </table>
       <p class="out">Hub-and-spoke model: Lisbon HQ as the hub, Porto/Coimbra/Faro as spokes, mapped to 4 AD Sites over a single physical LAN. The branches were modeled as OUs (for differentiated GPO application and delegation by location); the real physical topology is single-site.</p>
     </section>
@@ -51,33 +51,33 @@
     <section id="services">
       <p class="prompt">~$ cat services.log</p>
       <ol class="phases out">
-        <li><strong>1. Active Directory</strong> — Skynet-Corp root OU with sub-OUs by location and department, 4 global security groups + 1 distribution group; DC01↔DC02 replication validated (repadmin /replsummary, 0 failures)</li>
-        <li><strong>2. Forest trust</strong> — second forest istec-net.pt (DC03) with a bidirectional, transitive forest trust; cross-forest login validated end to end; granular (least-privilege) delegation tested against two opposite scenarios</li>
-        <li><strong>3. DNS and DHCP</strong> — selective Conditional Forwarders for istec-net.pt, public forwarders as the default path; DHCP failover in Load Balance 50/50 mode; WinNAT via PowerShell as a documented deviation from RRAS</li>
-        <li><strong>4. GPOs, shares and quotas</strong> — security GPOs and automatic drive mapping via SMB/NTFS; FSRM with Hard quotas per department and active File Screening</li>
-        <li><strong>5. Layered backup</strong> — Windows Server Backup (System State) on DC01; Veeam Backup &amp; Replication (agent-based, 7-day retention, AES-256) with File-Level Restore and Bare-Metal Recovery — 3-2-1 rule</li>
-        <li><strong>6. Hyper-V Replica and Live Migration</strong> — Ubuntu+Nginx VM replicated between HV01/HV02, Test/Planned Failover and Failback validated; Live Migration with no service interruption</li>
-        <li><strong>7. Management consoles</strong> — Hyper-V Manager, ESXi Host Client, Proxmox Web UI and Windows Admin Center (gateway with CredSSP, solving the double-hop problem)</li>
+        <li><strong>1. Active Directory</strong>: Skynet-Corp root OU with sub-OUs by location and department, 4 global security groups + 1 distribution group; DC01↔DC02 replication validated (repadmin /replsummary, 0 failures)</li>
+        <li><strong>2. Forest trust</strong>: second forest istec-net.pt (DC03) with a bidirectional, transitive forest trust; cross-forest login validated end to end; granular (least-privilege) delegation tested against two opposite scenarios</li>
+        <li><strong>3. DNS and DHCP</strong>: selective Conditional Forwarders for istec-net.pt, public forwarders as the default path; DHCP failover in Load Balance 50/50 mode; WinNAT via PowerShell as a documented deviation from RRAS</li>
+        <li><strong>4. GPOs, shares and quotas</strong>: security GPOs and automatic drive mapping via SMB/NTFS; FSRM with Hard quotas per department and active File Screening</li>
+        <li><strong>5. Layered backup</strong>: Windows Server Backup (System State) on DC01; Veeam Backup &amp; Replication (agent-based, 7-day retention, AES-256) with File-Level Restore and Bare-Metal Recovery (3-2-1 rule)</li>
+        <li><strong>6. Hyper-V Replica and Live Migration</strong>: Ubuntu+Nginx VM replicated between HV01/HV02, Test/Planned Failover and Failback validated; Live Migration with no service interruption</li>
+        <li><strong>7. Management consoles</strong>: Hyper-V Manager, ESXi Host Client, Proxmox Web UI and Windows Admin Center (gateway with CredSSP, solving the double-hop problem)</li>
       </ol>
     </section>
 
     <section id="challenges">
       <p class="prompt">~$ cat challenges.txt</p>
-      <p class="out"><strong class="label-accent">Case A — the error code pointed at the wrong place:</strong> Hyper-V blamed the SCSI controller, but the real cause was a deleted ISO folder. DC02, offline for over a day, came back with error 8524 (DNS); DNS was actually fine, these were residual counters, resolved with repadmin /syncall.</p>
-      <p class="out"><strong class="label-accent">Case B — an "active" service isn't necessarily a working one:</strong> WinNAT reported Active: True and the internal network worked, but GW01's two adapters were on the same subnet, with no boundary left to translate. I started always validating with Test-NetConnection instead of trusting the service's own reported state.</p>
-      <p class="out"><strong class="label-accent">Case C — the information was available and I just hadn't checked it yet:</strong> Windows Admin Center returned a connection reset. Network, route and firewall were all fine. The cause (port 443 instead of 6600) had been written in the event log from the start.</p>
+      <p class="out"><strong class="label-accent">Case A: the error code pointed at the wrong place:</strong> Hyper-V blamed the SCSI controller, but the real cause was a deleted ISO folder. DC02, offline for over a day, came back with error 8524 (DNS); DNS was actually fine, these were residual counters, resolved with repadmin /syncall.</p>
+      <p class="out"><strong class="label-accent">Case B: an "active" service isn't necessarily a working one:</strong> WinNAT reported Active: True and the internal network worked, but GW01's two adapters were on the same subnet, with no boundary left to translate. I started always validating with Test-NetConnection instead of trusting the service's own reported state.</p>
+      <p class="out"><strong class="label-accent">Case C: the information was available and I just hadn't checked it yet:</strong> Windows Admin Center returned a connection reset. Network, route and firewall were all fine. The cause (port 443 instead of 6600) had been written in the event log from the start.</p>
     </section>
 
     <section id="conclusion">
       <p class="prompt">~$ cat conclusion.txt</p>
       <p class="out">Every critical service was confirmed by more than one command or console, never just by the state the service reported about itself. Every deviation from the lab guide (RRAS→WinNAT, hypervisor-level backup→agent-based) is documented and justified with a tested technical reason, not hidden.</p>
-      <p class="out">The configurations implemented — multi-site replication, DHCP failover, layered backups (3-2-1 rule), and VM replication/Live Migration — are the same ones used in production, where high availability and disaster recovery aren't optional.</p>
+      <p class="out">The configurations implemented, including multi-site replication, DHCP failover, layered backups (3-2-1 rule), and VM replication/Live Migration, are the same ones used in production, where high availability and disaster recovery aren't optional.</p>
     </section>
 
     <section id="report">
       <p class="prompt">~$ ls -la report/</p>
-      <p class="out"><a href="../../assets/pdf/asii-skynet-lab-slides.pdf" target="_blank">./asii-skynet-lab-slides.pdf</a> — executive version (slides), for a quick read (in Portuguese)</p>
-      <p class="out"><a href="../../assets/pdf/asii-skynet-lab.pdf" target="_blank">./asii-skynet-lab.pdf</a> — full technical report (topology, AD, DNS/DHCP, GPOs, backups, replication and diagnostics — in Portuguese)</p>
+      <p class="out"><a href="../../assets/pdf/asii-skynet-lab-slides.pdf" target="_blank">./asii-skynet-lab-slides.pdf</a>: executive version (slides), for a quick read (in Portuguese)</p>
+      <p class="out"><a href="../../assets/pdf/asii-skynet-lab.pdf" target="_blank">./asii-skynet-lab.pdf</a>: full technical report (topology, AD, DNS/DHCP, GPOs, backups, replication and diagnostics, in Portuguese)</p>
     </section>
 
   </main>

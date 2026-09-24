@@ -22,6 +22,8 @@
       <p class="prompt"><span class="who">david@allsafe</span>:~$ cat projects/darkcomet-rat-lab.md</p>
       <h1>DarkComet RAT<span class="cursor"></span></h1>
       <p class="out">Trojans – Remote Access Trojan | Project II – Cybersecurity Hardware Lab | ISTEC Lisbon, 2025/2026</p>
+      <p class="prompt">~$ cat highlights.txt</p>
+      <p class="out"><strong class="label-accent">DarkComet RAT v5.3 · 2 isolated Windows 7 VMs · Full remote control via 1 TCP port · MITRE ATT&amp;CK mapped</strong></p>
       <nav class="menu">
         <a href="../index.html#projects">./back</a>
         <a href="../../projetos/darkcomet-rat-lab.html">PT</a>
@@ -31,7 +33,7 @@
     <section id="summary">
       <p class="prompt">~$ cat summary.txt</p>
       <p class="out">Hands-on analysis lab of DarkComet RAT v5.3, reproducing the full attack cycle: C2 infrastructure setup, payload generation, delivery, established connection, remote control with data exfiltration, and remote shutdown of the compromised system.</p>
-      <p class="out">Fully isolated environment — two Windows 7 SP1 VMs on an internal VirtualBox network with no internet access ("labrede", 192.168.100.0/24) — no distribution of the payload outside the lab.</p>
+      <p class="out">Fully isolated environment: two Windows 7 SP1 VMs on an internal VirtualBox network with no internet access ("labrede", 192.168.100.0/24), no distribution of the payload outside the lab.</p>
     </section>
 
     <section id="environment">
@@ -47,13 +49,13 @@
     <section id="phases">
       <p class="prompt">~$ cat phases.log</p>
       <ol class="phases out">
-        <li><strong>1. Server setup</strong> — DarkComet listening on port 1604 (Listening, UPnP enabled)</li>
-        <li><strong>2. Stub generation</strong> — minimal payload generated as update.exe, IP corrected to 192.168.100.1, persistence enabled, disguised as a legitimate update</li>
-        <li><strong>3. Victim preparation</strong> — transferred via a VirtualBox shared folder (stands in for a real vector: phishing/USB/drive-by), temporary Defender exception on the host</li>
-        <li><strong>4. Delivery and execution</strong> — victim runs the payload; stub connects to the C2 on port 1604</li>
-        <li><strong>5. Connection established</strong> — victim appears on the panel with IP, OS, RAM, language and real-time latency</li>
-        <li><strong>6. Remote control and exfiltration</strong> — active Remote Desktop, System Info collection (OS, MAC, SysDir, uptime)</li>
-        <li><strong>7. Remote shutdown</strong> — victim machine shut down on the attacker's command</li>
+        <li><strong>1. Server setup</strong>: DarkComet listening on port 1604 (Listening, UPnP enabled)</li>
+        <li><strong>2. Stub generation</strong>: minimal payload generated as update.exe, IP corrected to 192.168.100.1, persistence enabled, disguised as a legitimate update</li>
+        <li><strong>3. Victim preparation</strong>: transferred via a VirtualBox shared folder (stands in for a real vector: phishing/USB/drive-by), temporary Defender exception on the host</li>
+        <li><strong>4. Delivery and execution</strong>: victim runs the payload; stub connects to the C2 on port 1604</li>
+        <li><strong>5. Connection established</strong>: victim appears on the panel with IP, OS, RAM, language and real-time latency</li>
+        <li><strong>6. Remote control and exfiltration</strong>: active Remote Desktop, System Info collection (OS, MAC, SysDir, uptime)</li>
+        <li><strong>7. Remote shutdown</strong>: victim machine shut down on the attacker's command</li>
       </ol>
     </section>
 
@@ -66,7 +68,7 @@
         <tr><td>Command and Control</td><td>T1071</td><td>Persistent outbound TCP connection to the C2 (port 1604)</td></tr>
         <tr><td>System Information Discovery</td><td>T1082</td><td>Automatic system data collection via the System Info module</td></tr>
       </table>
-      <p class="out">Reference: <a href="https://attack.mitre.org/software/S0334/" target="_blank" rel="noopener">DarkComet (S0334) — MITRE ATT&CK</a></p>
+      <p class="out">Reference: <a href="https://attack.mitre.org/software/S0334/" target="_blank" rel="noopener">DarkComet (S0334): MITRE ATT&CK</a></p>
     </section>
 
     <section id="video">
@@ -78,12 +80,12 @@
 
     <section id="conclusion">
       <p class="prompt">~$ cat conclusion.txt</p>
-      <p class="out">A single outbound TCP connection on port 1604 was enough for full control of the compromised system — reinforcing that effective detection depends less on port blocking and more on identifying C2 protocol patterns and signatures.</p>
+      <p class="out">A single outbound TCP connection on port 1604 was enough for full control of the compromised system, reinforcing that effective detection depends less on port blocking and more on identifying C2 protocol patterns and signatures.</p>
     </section>
 
     <section id="report">
       <p class="prompt">~$ ls -la report/</p>
-      <p class="out"><a href="../../assets/pdf/darkcomet-rat-lab.pdf" target="_blank">./darkcomet-rat-lab.pdf</a> — full technical report (theoretical background, step-by-step setup, TTPs and references — report in Portuguese)</p>
+      <p class="out"><a href="../../assets/pdf/darkcomet-rat-lab.pdf" target="_blank">./darkcomet-rat-lab.pdf</a>: full technical report (theoretical background, step-by-step setup, TTPs and references, report in Portuguese)</p>
     </section>
 
   </main>

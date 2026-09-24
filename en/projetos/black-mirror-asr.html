@@ -20,6 +20,8 @@
       <p class="prompt"><span class="who">david@allsafe</span>:~$ cat projects/black-mirror-asr.md</p>
       <h1>Black Mirror<span class="cursor"></span></h1>
       <p class="out">Network Services Administration | Network services infrastructure for an organization | ISTEC Lisbon, 2025/2026</p>
+      <p class="prompt">~$ cat highlights.txt</p>
+      <p class="out"><strong class="label-accent">6 network services · Firewall + DNS + DHCP + WordPress + Nagios + Wazuh · LAN 10.10.10.0/24 · Tested end to end (LAN + WAN)</strong></p>
       <nav class="menu">
         <a href="../index.html#projects">./back</a>
         <a href="../../projetos/black-mirror-asr.html">PT</a>
@@ -28,8 +30,8 @@
 
     <section id="summary">
       <p class="prompt">~$ cat summary.txt</p>
-      <p class="out">Complete network infrastructure for "Black Mirror", a fictional organization: firewall/gateway with OPNsense, internal DNS and DHCP, an Ubuntu server hosting a published WordPress portal, availability monitoring with Nagios, and security event detection with a Wazuh SIEM — all virtualized on Hyper-V, on the 10.10.10.0/24 LAN and the blackmirror.local domain.</p>
-      <p class="out">Tested end to end: a client receives an IP via DHCP, resolves the internal domain via DNS, and reaches WordPress through the firewall, with the event landing in Wazuh — including an external access test to the portal via port-forward on OPNsense, with the LAN disabled.</p>
+      <p class="out">Complete network infrastructure for "Black Mirror", a fictional organization: firewall/gateway with OPNsense, internal DNS and DHCP, an Ubuntu server hosting a published WordPress portal, availability monitoring with Nagios, and security event detection with a Wazuh SIEM, all virtualized on Hyper-V, on the 10.10.10.0/24 LAN and the blackmirror.local domain.</p>
+      <p class="out">Tested end to end: a client receives an IP via DHCP, resolves the internal domain via DNS, and reaches WordPress through the firewall, with the event landing in Wazuh, including an external access test to the portal via port-forward on OPNsense, with the LAN disabled.</p>
     </section>
 
     <section id="topology">
@@ -37,10 +39,10 @@
       <table class="tbl">
         <tr><th>Machine</th><th>Role</th><th>IP</th></tr>
         <tr><td>OPNsense-fw</td><td>Firewall / gateway, DNS + DHCP</td><td>10.10.10.1 (LAN)</td></tr>
-        <tr><td>srv-core</td><td>Ubuntu Server — core services</td><td>10.10.10.10</td></tr>
+        <tr><td>srv-core</td><td>Ubuntu Server: core services</td><td>10.10.10.10</td></tr>
         <tr><td>srv-web</td><td>Ubuntu + WordPress (LAMP + Redis)</td><td>10.10.10.20</td></tr>
-        <tr><td>srv-nagios</td><td>Monitoring — Nagios Core</td><td>10.10.10.30</td></tr>
-        <tr><td>srv-wazuh</td><td>SIEM — Wazuh (CentOS Stream)</td><td>10.10.10.40</td></tr>
+        <tr><td>srv-nagios</td><td>Monitoring: Nagios Core</td><td>10.10.10.30</td></tr>
+        <tr><td>srv-wazuh</td><td>SIEM: Wazuh (CentOS Stream)</td><td>10.10.10.40</td></tr>
         <tr><td>client</td><td>Test workstation (DHCP)</td><td>10.10.10.100–200</td></tr>
       </table>
       <p class="out">Hypervisor: Microsoft Hyper-V · LAN: 10.10.10.0/24 · Domain: blackmirror.local</p>
@@ -49,32 +51,32 @@
     <section id="services">
       <p class="prompt">~$ cat services.log</p>
       <ol class="phases out">
-        <li><strong>1. Firewall / gateway (OPNsense)</strong> — WAN with outbound NAT, LAN on 10.10.10.1/24, the base for every service below</li>
-        <li><strong>2. Internal DNS</strong> — Dnsmasq on OPNsense with Unbound as recursive resolver; A and PTR records for the servers on the blackmirror.local domain</li>
-        <li><strong>3. DHCP</strong> — 10.10.10.100–200 range on the LAN, handing out gateway, DNS and domain to clients</li>
-        <li><strong>4. Ubuntu server (srv-core)</strong> — static IP via netplan and remote access over SSH, the base for the services below</li>
-        <li><strong>5. Web / WordPress server (srv-web)</strong> — dedicated LAMP stack, database with a least-privilege user, Redis cache and publication via port-forward on OPNsense</li>
-        <li><strong>6. Monitoring (Nagios)</strong> — host and service availability (PING/HTTP/SSH/disk), with the firewall monitored over ICMP as a compensating control</li>
-        <li><strong>7. SIEM (Wazuh)</strong> — all-in-one platform with agents on the Ubuntu hosts, file integrity monitoring (FIM), log collection and vulnerability detection</li>
+        <li><strong>1. Firewall / gateway (OPNsense)</strong>: WAN with outbound NAT, LAN on 10.10.10.1/24, the base for every service below</li>
+        <li><strong>2. Internal DNS</strong>: Dnsmasq on OPNsense with Unbound as recursive resolver; A and PTR records for the servers on the blackmirror.local domain</li>
+        <li><strong>3. DHCP</strong>: 10.10.10.100–200 range on the LAN, handing out gateway, DNS and domain to clients</li>
+        <li><strong>4. Ubuntu server (srv-core)</strong>: static IP via netplan and remote access over SSH, the base for the services below</li>
+        <li><strong>5. Web / WordPress server (srv-web)</strong>: dedicated LAMP stack, database with a least-privilege user, Redis cache and publication via port-forward on OPNsense</li>
+        <li><strong>6. Monitoring (Nagios)</strong>: host and service availability (PING/HTTP/SSH/disk), with the firewall monitored over ICMP as a compensating control</li>
+        <li><strong>7. SIEM (Wazuh)</strong>: all-in-one platform with agents on the Ubuntu hosts, file integrity monitoring (FIM), log collection and vulnerability detection</li>
       </ol>
     </section>
 
     <section id="challenges">
       <p class="prompt">~$ cat challenges.txt</p>
       <p class="out">Several guides assumed VirtualBox/VMware, requiring adaptations for Hyper-V: hn0/hn1 interface names instead of em0/em1 on OPNsense, MacAddressSpoofing disabled by default blocking L2 traffic, and Secure Boot rejecting the Wazuh CentOS VM's boot.</p>
-      <p class="out">Consistent layered diagnostics (L2 → firewall → socket → client) to isolate failures — for example, a false WAN-access timeout to WordPress that turned out to be an incorrect interface selection on the host, confirmed with Test-NetConnection instead of a local curl.</p>
+      <p class="out">Consistent layered diagnostics (L2 → firewall → socket → client) to isolate failures, for example, a false WAN-access timeout to WordPress that turned out to be an incorrect interface selection on the host, confirmed with Test-NetConnection instead of a local curl.</p>
       <p class="out">OPNsense fell outside the scope of SNMP and Wazuh agents (which would require updating the firewall and have no FreeBSD agent, respectively), compensated with ICMP monitoring in Nagios.</p>
     </section>
 
     <section id="conclusion">
       <p class="prompt">~$ cat conclusion.txt</p>
-      <p class="out">The model reproduces the install → manage → observe cycle of a typical SME: a single perimeter with firewall/gateway, centralized core services, a published business application, and an observability and security layer — built on separation of duties, least privilege and defense in depth.</p>
+      <p class="out">The model reproduces the install → manage → observe cycle of a typical SME: a single perimeter with firewall/gateway, centralized core services, a published business application, and an observability and security layer, built on separation of duties, least privilege and defense in depth.</p>
       <p class="out">Future improvements: VLAN segmentation, high availability on OPNsense (CARP) and on the DNS/DHCP services, HTTPS/TLS on WordPress, centralized logging with custom Wazuh alerts, and automated backups with a recovery plan.</p>
     </section>
 
     <section id="report">
       <p class="prompt">~$ ls -la report/</p>
-      <p class="out"><a href="../../assets/pdf/black-mirror-asr.pdf" target="_blank">./black-mirror-asr.pdf</a> — full technical report (background, implementation, evidence and MITRE mapping where applicable — report in Portuguese)</p>
+      <p class="out"><a href="../../assets/pdf/black-mirror-asr.pdf" target="_blank">./black-mirror-asr.pdf</a>: full technical report (background, implementation, evidence and MITRE mapping where applicable, report in Portuguese)</p>
     </section>
 
   </main>
