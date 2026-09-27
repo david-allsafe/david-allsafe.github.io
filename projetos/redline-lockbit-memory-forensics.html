@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Forense de Memória: RedLine vs. LockBit 4.0 | David Miranda</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    .tbl{width:100%;border-collapse:collapse;margin:1rem 0;font-size:0.9rem;}
+    .tbl th,.tbl td{border:1px solid currentColor;padding:0.4rem 0.7rem;text-align:left;opacity:0.9;}
+    .phases{list-style:none;padding-left:0;margin:1rem 0;}
+    .phases li{margin-bottom:0.5rem;}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+
+    <section>
+      <p class="prompt"><span class="who">david@allsafe</span>:~$ cat projetos/redline-lockbit-memory-forensics.md</p>
+      <h1>Forense de Memória: RedLine vs. LockBit 4.0<span class="cursor"></span></h1>
+      <p class="out">Estudo comparativo de forense de memória: infostealer vs. ransomware, a partir de dumps de memória viva | ISTEC Lisboa, 2025/2026 | UC de Análise Forense Digital | Nota: 19/20</p>
+      <p class="prompt">~$ cat highlights.txt</p>
+      <p class="out"><strong class="label-accent">Volatility 3 v2.28.0 · 2 famílias de malware comparadas · Injeção de código (T1055) detetada via malfind · Atribuição confirmada por MalwareBazaar e strings em memória</strong></p>
+      <nav class="menu">
+        <a href="../index.html#projetos">./voltar</a>
+        <a href="../en/projetos/redline-lockbit-memory-forensics.html">EN</a>
+      </nav>
+    </section>
+
+    <section id="resumo">
+      <p class="prompt">~$ cat resumo.txt</p>
+      <p class="out">Relatório final da UC de Análise Forense Digital: um estudo comparativo de forense de memória entre duas famílias de malware com comportamentos radicalmente diferentes — RedLine Stealer (infostealer) e LockBit 4.0 (ransomware) — capturadas em ambiente isolado.</p>
+      <p class="out">A tese central do estudo: a pegada forense depende tanto da família do malware como do momento da aquisição face ao ciclo de vida do processo. Um processo ainda ativo (RedLine) deixa vestígios muito diferentes de um processo que já terminou por ter concluído o seu objetivo (LockBit, comportamento "cifra-e-sai").</p>
+    </section>
+
+    <section id="ambiente">
+      <p class="prompt">~$ cat ambiente.txt</p>
+      <table class="tbl">
+        <tr><th>Componente</th><th>Detalhe</th></tr>
+        <tr><td>Vítima</td><td>Windows 10 Pro 22H2 (DESKTOP-A10VAUI), VMware Workstation Pro 17</td></tr>
+        <tr><td>Análise</td><td>Kali Linux 2026.3, rede host-only isolada</td></tr>
+        <tr><td>Ferramentas</td><td>Volatility 3 v2.28.0, Sysinternals (Process Explorer, TCPView, Autoruns), certutil/sha256sum</td></tr>
+      </table>
+    </section>
+
+    <section id="caso-a">
+      <p class="prompt">~$ cat caso-a-redline.log</p>
+      <p class="out">Caso A — RedLine Stealer: capturado com o processo ainda ativo (PID 1040).</p>
+      <ol class="phases out">
+        <li><strong>1. Aquisição</strong>: WinPmem; resolvido um problema de modo PTE Remapping forçando o alvo PhysicalMemory</li>
+        <li><strong>2. Injeção de código (T1055)</strong>: 4 regiões RWX identificadas via windows.malfind</li>
+        <li><strong>3. Rede</strong>: 2 sockets TCP em estado CLOSED — tentativa de C2 não concretizada</li>
+        <li><strong>4. Persistência</strong>: nenhuma estabelecida; binário .NET</li>
+        <li><strong>5. Atribuição</strong>: MalwareBazaar (16 deteções, 16 regras YARA) + carregamento do CLR confirmado na memória</li>
+      </ol>
+    </section>
+
+    <section id="caso-b">
+      <p class="prompt">~$ cat caso-b-lockbit.log</p>
+      <p class="out">Caso B — LockBit 4.0 (amostra LockBitGreen4.0-rc-577, MalwareBazaar): processo já terminado no momento da captura.</p>
+      <ol class="phases out">
+        <li><strong>1. Aquisição</strong>: WinPmem e FTK Imager falharam por assinatura de driver não reconhecida (Driver Signature Enforcement); contornado com Magnet DumpIt</li>
+        <li><strong>2. Estado do processo</strong>: já terminado no momento da captura — comportamento "cifra-e-sai"</li>
+        <li><strong>3. Impacto</strong>: ficheiros e a própria amostra cifrados (extensão hexadecimal única); nota de resgate Restore-My-Files.txt</li>
+        <li><strong>4. Anti-forense</strong>: eliminação de cópias de sombra confirmada no sistema vivo (T1490)</li>
+        <li><strong>5. Ausências</strong>: sem injeção de código nem persistência visível no dump</li>
+        <li><strong>6. Atribuição</strong>: strings na memória física (versão, ID pessoal, chave de acesso) coincidentes com a nota de resgate</li>
+      </ol>
+    </section>
+
+    <section id="classificacao">
+      <p class="prompt">~$ cat classificacao.txt</p>
+      <p class="out">Classificação RNCSIRT v3.3 — Caso A: primária Exfiltração de Informação / secundária Sistema Infetado; Caso B: primária Indisponibilização por Ransomware / secundária Sistema Infetado. Leituras complementares ao MITRE ATT&CK: Diamond Model e Malware Behavior Catalog v3.1.</p>
+    </section>
+
+    <section id="conclusao">
+      <p class="prompt">~$ cat conclusao.txt</p>
+      <p class="out">Os dois casos confirmam a tese de partida: o mesmo conjunto de ferramentas (Volatility 3 + Sysinternals) produziu evidências de natureza oposta consoante a família de malware e o momento da captura face ao ciclo de vida do processo — injeção de código e rede ativa num caso, cifra concluída e processo já terminado noutro.</p>
+    </section>
+
+    <section id="relatorio">
+      <p class="prompt">~$ ls -la relatorio/</p>
+      <p class="out"><a href="../assets/pdf/redline-lockbit-slides.pdf" target="_blank">./redline-lockbit-slides.pdf</a>: versão executiva (slides), para leitura rápida</p>
+      <p class="out"><a href="../assets/pdf/redline-lockbit-memory-forensics.pdf" target="_blank">./redline-lockbit-memory-forensics.pdf</a>: relatório técnico completo (metodologia, evidências e referências)</p>
+    </section>
+
+  </main>
+</body>
+</html>
