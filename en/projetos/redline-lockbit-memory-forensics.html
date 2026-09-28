@@ -30,8 +30,8 @@
 
     <section id="summary">
       <p class="prompt">~$ cat summary.txt</p>
-      <p class="out">Final report for the Digital Forensics course: a comparative memory-forensics study between two malware families with radically different behavior — RedLine Stealer (infostealer) and LockBit 4.0 (ransomware) — both captured in an isolated environment.</p>
-      <p class="out">The study's central thesis: the forensic footprint depends both on the malware family and on the timing of acquisition relative to the process lifecycle. A still-active process (RedLine) leaves very different traces from a process that has already terminated after completing its objective (LockBit, "encrypt-and-exit" behavior).</p>
+      <p class="out">Final report for the Digital Forensics course: a comparative memory forensics study of two malware families with very different behavior, RedLine Stealer (infostealer) and LockBit 4.0 (ransomware), both captured in an isolated environment.</p>
+      <p class="out">Main conclusion: the forensic footprint depends on the malware family and on when the capture happens relative to the process lifecycle. A process that is still running (RedLine) leaves very different traces from one that has already exited (LockBit, "encrypt-and-exit" behavior).</p>
     </section>
 
     <section id="environment">
@@ -46,11 +46,11 @@
 
     <section id="case-a">
       <p class="prompt">~$ cat case-a-redline.log</p>
-      <p class="out">Case A — RedLine Stealer: captured with the process still active (PID 1040).</p>
+      <p class="out">Case A (RedLine Stealer): captured with the process still running (PID 1040).</p>
       <ol class="phases out">
         <li><strong>1. Acquisition</strong>: WinPmem; resolved a PTE Remapping mode issue by forcing the PhysicalMemory target</li>
         <li><strong>2. Code injection (T1055)</strong>: 4 RWX regions identified via windows.malfind</li>
-        <li><strong>3. Network</strong>: 2 TCP sockets in CLOSED state — an unsuccessful C2 attempt</li>
+        <li><strong>3. Network</strong>: 2 TCP sockets in CLOSED state, meaning an unsuccessful C2 attempt</li>
         <li><strong>4. Persistence</strong>: none established; .NET binary</li>
         <li><strong>5. Attribution</strong>: MalwareBazaar (16 detections, 16 YARA rules) plus CLR loading confirmed in memory</li>
       </ol>
@@ -58,10 +58,10 @@
 
     <section id="case-b">
       <p class="prompt">~$ cat case-b-lockbit.log</p>
-      <p class="out">Case B — LockBit 4.0 (sample LockBitGreen4.0-rc-577, MalwareBazaar): process already terminated at capture time.</p>
+      <p class="out">Case B (LockBit 4.0, sample LockBitGreen4.0-rc-577 from MalwareBazaar): process already terminated at capture time.</p>
       <ol class="phases out">
         <li><strong>1. Acquisition</strong>: WinPmem and FTK Imager both failed due to unrecognized driver signature (Driver Signature Enforcement); bypassed with Magnet DumpIt</li>
-        <li><strong>2. Process state</strong>: already terminated at capture time — "encrypt-and-exit" behavior</li>
+        <li><strong>2. Process state</strong>: already terminated at capture time ("encrypt-and-exit" behavior)</li>
         <li><strong>3. Impact</strong>: files and the sample itself encrypted (unique hexadecimal extension); ransom note Restore-My-Files.txt</li>
         <li><strong>4. Anti-forensics</strong>: shadow-copy deletion confirmed on the live system (T1490)</li>
         <li><strong>5. Absences</strong>: no code injection and no persistence visible in the dump</li>
@@ -71,12 +71,12 @@
 
     <section id="classification">
       <p class="prompt">~$ cat classification.txt</p>
-      <p class="out">RNCSIRT v3.3 classification — Case A: primary Information Exfiltration / secondary Infected System; Case B: primary Ransomware Unavailability / secondary Infected System. Complementary readings alongside MITRE ATT&CK: the Diamond Model and the Malware Behavior Catalog v3.1.</p>
+      <p class="out">RNCSIRT v3.3 classification. Case A: primary Information Exfiltration, secondary Infected System. Case B: primary Ransomware Unavailability, secondary Infected System. Complementary readings alongside MITRE ATT&CK: the Diamond Model and the Malware Behavior Catalog v3.1.</p>
     </section>
 
     <section id="conclusion">
       <p class="prompt">~$ cat conclusion.txt</p>
-      <p class="out">Both cases confirm the starting thesis: the same toolset (Volatility 3 plus Sysinternals) produced evidence of an opposite nature depending on the malware family and the timing of capture relative to the process lifecycle — active code injection and networking in one case, completed encryption and an already-terminated process in the other.</p>
+      <p class="out">Both cases confirm that conclusion: the same tools (Volatility 3 and Sysinternals) gave opposite evidence depending on the malware family and the timing of the capture. One case shows code injection and active networking; the other shows completed encryption and an already terminated process.</p>
     </section>
 
     <section id="report">

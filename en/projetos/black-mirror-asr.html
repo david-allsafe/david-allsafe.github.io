@@ -43,7 +43,7 @@
         <tr><td>srv-web</td><td>Ubuntu + WordPress (LAMP + Redis)</td><td>10.10.10.20</td></tr>
         <tr><td>srv-nagios</td><td>Monitoring: Nagios Core</td><td>10.10.10.30</td></tr>
         <tr><td>srv-wazuh</td><td>SIEM: Wazuh (CentOS Stream)</td><td>10.10.10.40</td></tr>
-        <tr><td>client</td><td>Test workstation (DHCP)</td><td>10.10.10.100–200</td></tr>
+        <tr><td>client</td><td>Test workstation (DHCP)</td><td>10.10.10.100-200</td></tr>
       </table>
       <p class="out">Hypervisor: Microsoft Hyper-V · LAN: 10.10.10.0/24 · Domain: blackmirror.local</p>
     </section>
@@ -53,7 +53,7 @@
       <ol class="phases out">
         <li><strong>1. Firewall / gateway (OPNsense)</strong>: WAN with outbound NAT, LAN on 10.10.10.1/24, the base for every service below</li>
         <li><strong>2. Internal DNS</strong>: Dnsmasq on OPNsense with Unbound as recursive resolver; A and PTR records for the servers on the blackmirror.local domain</li>
-        <li><strong>3. DHCP</strong>: 10.10.10.100–200 range on the LAN, handing out gateway, DNS and domain to clients</li>
+        <li><strong>3. DHCP</strong>: 10.10.10.100-200 range on the LAN, handing out gateway, DNS and domain to clients</li>
         <li><strong>4. Ubuntu server (srv-core)</strong>: static IP via netplan and remote access over SSH, the base for the services below</li>
         <li><strong>5. Web / WordPress server (srv-web)</strong>: dedicated LAMP stack, database with a least-privilege user, Redis cache and publication via port-forward on OPNsense</li>
         <li><strong>6. Monitoring (Nagios)</strong>: host and service availability (PING/HTTP/SSH/disk), with the firewall monitored over ICMP as a compensating control</li>
