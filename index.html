@@ -4,87 +4,196 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>David Miranda | Estudante de Cibersegurança</title>
-  <meta name="description" content="David Miranda, Estudante de Cibersegurança em Lisboa (ISTEC), com foco em Blue Team. Labs práticos de análise de malware, forense digital e resposta a incidentes. À procura de uma primeira oportunidade profissional ou estágio curricular em cibersegurança, Lisboa.">
+  <meta name="description" content="David Miranda, estudante de cibersegurança no ISTEC Lisboa, com foco em Blue Team e SOC. Labs práticos de forense digital, análise de malware e SIEM, e um mini-SOC em Azure como projeto final. À procura de estágio curricular ou posição júnior em Lisboa.">
   <meta property="og:title" content="David Miranda | Estudante de Cibersegurança">
-  <meta property="og:description" content="Estudante de cibersegurança em Lisboa (ISTEC), foco em Blue Team. Labs de malware, forense digital e resposta a incidentes.">
+  <meta property="og:description" content="Estudante de cibersegurança no ISTEC Lisboa, foco em Blue Team e SOC. Forense digital, análise de malware, SIEM e um mini-SOC em Azure.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://david-allsafe.github.io">
-  <meta name="twitter:card" content="summary">
+  <meta property="og:url" content="https://david-allsafe.github.io/">
+  <meta property="og:image" content="https://david-allsafe.github.io/assets/img/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="canonical" href="https://david-allsafe.github.io/">
   <link rel="alternate" hreflang="pt-pt" href="https://david-allsafe.github.io/">
   <link rel="alternate" hreflang="en" href="https://david-allsafe.github.io/en/">
   <link rel="alternate" hreflang="x-default" href="https://david-allsafe.github.io/">
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/home.css">
 </head>
 <body>
-  <main class="wrap">
-    <section class="hero">
-      <h1>Hello, friend.<span class="cursor"></span></h1>
-      <p class="prompt"><span class="who">david@allsafe</span>:~$ whoami</p>
-      <p class="out">David Miranda. Estudante de cibersegurança no ISTEC Lisboa, com foco em Blue Team e interesse em segurança cloud. Pratico todos os dias com labs no TryHackMe. Procuro a minha primeira oportunidade em cibersegurança (estágio curricular ou posição júnior), em Lisboa, com disponibilidade imediata.</p>
-      <nav class="menu">
+  <header class="topbar">
+    <div class="container">
+      <a class="brand" href="#top">david@allsafe<span>:~$</span></a>
+      <nav class="menu" aria-label="Navegação principal">
         <a href="#projetos">./projetos</a>
         <a href="#skills">./skills</a>
         <a href="#certificados">./certificados</a>
         <a href="assets/pdf/David-Miranda-CV-Cybersecurity-PT.pdf" target="_blank" rel="noopener">./cv.pdf</a>
         <a href="#contacto">./contacto</a>
-        <a href="en/index.html">EN</a>
+        <a class="lang" href="en/index.html" hreflang="en">EN</a>
       </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container">
+        <div class="hero-main">
+          <p class="hello">Hello, friend.</p>
+          <p class="prompt">~$ whoami</p>
+          <h1>David Miranda</h1>
+          <p class="role">Estudante de Cibersegurança · Blue Team / SOC</p>
+          <p class="edu">CTeSP em Cibersegurança, ISTEC Lisboa · estágio curricular de 800 h a partir de março de 2027</p>
+          <p class="lead">Labs práticos de forense digital, análise de malware e SIEM, e um mini-SOC em Azure como projeto final. Procuro a primeira oportunidade profissional ou estágio curricular em cibersegurança, em Lisboa.</p>
+          <div class="status"><span class="dot" aria-hidden="true"></span><span>Aberto a oportunidades · Lisboa</span></div>
+          <div class="badges">
+            <a class="badge ok" href="https://www.credly.com/badges/8df6ef1b-4b24-4342-822d-d12e6c65b295/linked_in_profile" target="_blank" rel="noopener">ISC2 CC – Certified in Cybersecurity</a>
+            <span class="badge">Microsoft SC-200 – Security Operations Analyst <span class="dim">· em preparação</span></span>
+          </div>
+          <div class="actions">
+            <a class="btn primary" href="assets/pdf/David-Miranda-CV-Cybersecurity-PT.pdf" target="_blank" rel="noopener">Descarregar CV</a>
+            <a class="btn" href="https://www.linkedin.com/in/davidmirand0/" target="_blank" rel="noopener">LinkedIn</a>
+            <a class="btn" href="mailto:David.miranda@outlook.com">Email</a>
+          </div>
+        </div>
+        <aside class="term" aria-label="TryHackMe">
+          <div class="term-bar" aria-hidden="true"><span></span><span></span><span></span></div>
+          <div class="term-body">
+            <p class="prompt">~$ cat status.txt</p>
+            <div class="stats">
+            <div class="stat"><b>85</b><small>salas TryHackMe</small></div>
+            <div class="stat"><b>14</b><small>badges TryHackMe</small></div>
+            <div class="stat"><b>6</b><small>labs publicados</small></div>
+            </div>
+            <p class="dim">em curso: <span style="color:var(--fg)">Projeto Final Colmeia</span></p>
+            <p class="updated">atualizado em out. 2026</p>
+          </div>
+        </aside>
+      </div>
     </section>
 
-    <section id="projetos">
-      <p class="prompt">~$ ls projetos/</p>
-      <p class="out"><a class="link-plain" href="projetos/darkcomet-rat-lab.html">darkcomet-rat-lab/</a></p>
-      <p class="out"><a class="link-plain" href="projetos/black-mirror-asr.html">black-mirror-asr/</a></p>
-      <p class="out"><a class="link-plain" href="projetos/afd-e01-forensics.html">afd-e01-forensics/</a></p>
-      <p class="out"><a class="link-plain" href="projetos/istec-pos.html">istec-pos/</a></p>
-      <p class="out"><a class="link-plain" href="projetos/asii-skynet-lab.html">asii-skynet-lab/</a></p>
-      <p class="out"><a class="link-plain" href="projetos/redline-lockbit-memory-forensics.html">redline-lockbit-memory-forensics/</a></p>
+    <section class="section" id="projetos">
+      <div class="container">
+        <div class="section-head"><p class="prompt">~$ ls projetos/ --sort=relevancia</p><h2>Projetos</h2></div>
+        <div class="grid">
+        <article class="card">
+          <div class="card-meta"><span class="kind">projeto final · em curso</span><span class="extra">conclusão fev. 2027</span></div>
+          <h3>Colmeia: agente de IA para triagem num mini-SOC</h3>
+          <p>Honeypot SSH ativo em Azure desde 17/10: 54 445 eventos e 10 865 sessões de 241 IPs nos primeiros 3 dias, incluindo a campanha RedTail. Pipeline e baseline por regras concluídos (176 testes); Sentinel e agente de IA a seguir.</p>
+          <ul class="tags"><li>Azure</li><li>Cowrie</li><li>honeytokens</li><li>MITRE ATT&amp;CK</li><li>Sentinel (a seguir)</li></ul>
+          <span class="more soon">página em breve</span>
+        </article>
+        <a class="card" href="projetos/redline-lockbit-memory-forensics.html">
+          <div class="card-meta"><span class="kind">forense de memória</span><span class="extra">relatório + deck</span></div>
+          <h3>RedLine Stealer vs. LockBit 4.0</h3>
+          <p>Análise comparativa de infostealer e ransomware a partir de dumps de memória, com TTPs mapeadas.</p>
+          <ul class="tags"><li>Volatility 3</li><li>WinPmem</li><li>T1055</li><li>T1490</li></ul>
+          <span class="more">ler mais →</span>
+        </a>
+        <a class="card" href="projetos/black-mirror-asr.html">
+          <div class="card-meta"><span class="kind">SIEM / infraestrutura</span><span class="extra">ASR</span></div>
+          <h3>Black Mirror: rede monitorizada</h3>
+          <p>Infraestrutura em Hyper-V com firewall, serviços de rede e monitorização centralizada com Wazuh.</p>
+          <ul class="tags"><li>Wazuh</li><li>OPNsense</li><li>Nagios</li><li>Hyper-V</li></ul>
+          <span class="more">ler mais →</span>
+        </a>
+        <a class="card" href="projetos/afd-e01-forensics.html">
+          <div class="card-meta"><span class="kind">forense digital</span><span class="extra">relatório + deck</span></div>
+          <h3>AFD: análise de imagem E01</h3>
+          <p>Aquisição e análise forense de uma imagem E01 segundo boas práticas de cadeia de custódia.</p>
+          <ul class="tags"><li>FTK Imager</li><li>Autopsy</li><li>ISO/IEC 27037</li></ul>
+          <span class="more">ler mais →</span>
+        </a>
+        <a class="card" href="projetos/darkcomet-rat-lab.html">
+          <div class="card-meta"><span class="kind">análise de malware</span><span class="extra">demo em vídeo</span></div>
+          <h3>DarkComet RAT lab</h3>
+          <p>Comportamento de um RAT em ambiente isolado, mapeado para MITRE ATT&amp;CK.</p>
+          <ul class="tags"><li>MITRE ATT&amp;CK</li><li>malware</li><li>lab isolado</li></ul>
+          <span class="more">ler mais →</span>
+        </a>
+        <a class="card" href="projetos/asii-skynet-lab.html">
+          <div class="card-meta"><span class="kind">sistemas</span><span class="extra">relatório + deck</span></div>
+          <h3>ASII: Skynet, Lda.</h3>
+          <p>Infraestrutura Windows Server para uma empresa fictícia em Hyper-V nested: domínio AD com DNS/DHCP, GPO e FSRM, backups com Veeam e alta disponibilidade com Replica e Live Migration.</p>
+          <ul class="tags"><li>Active Directory</li><li>GPO</li><li>Hyper-V Replica</li><li>Veeam</li></ul>
+          <span class="more">ler mais →</span>
+        </a>
+        <a class="card" href="projetos/istec-pos.html">
+          <div class="card-meta"><span class="kind">desenvolvimento</span><span class="extra">GitHub</span></div>
+          <h3>ISTEC POS</h3>
+          <p>Aplicação de ponto de venda em Python com interface PyQt5.</p>
+          <ul class="tags"><li>Python</li><li>PyQt5</li></ul>
+          <span class="more">ler mais →</span>
+        </a>
+        </div>
+      </div>
     </section>
 
-    <section id="skills">
-      <p class="prompt">~$ ls skills/</p>
-      <p class="out"><strong class="label-accent">Infraestrutura:</strong> Active Directory · GPO · DNS/DHCP · Windows Server · Windows Admin Center · Hyper-V (Replica, Live Migration) · VMware ESXi · Proxmox VE · VMware Workstation · Linux</p>
-      <p class="out"><strong class="label-accent">Segurança &amp; Deteção:</strong> SIEM (Wazuh) · Nagios · Firewall (OPNsense) · MITRE ATT&amp;CK</p>
-      <p class="out"><strong class="label-accent">Backup &amp; Recuperação:</strong> Veeam Backup &amp; Replication · Windows Server Backup</p>
-      <p class="out"><strong class="label-accent">Forense Digital:</strong> FTK Imager · Autopsy · TSK · binwalk · Volatility 3 · WinPmem · NIST SP 800-86 · ISO/IEC 27037</p>
-      <p class="out"><strong class="label-accent">Scripting:</strong> PowerShell · Python</p>
+    <section class="section" id="skills">
+      <div class="container">
+        <div class="section-head"><p class="prompt">~$ ls skills/</p><h2>Competências</h2></div>
+        <div class="grid">
+        <div class="skill-group">
+          <h3>Segurança &amp; Deteção</h3>
+          <ul class="chips"><li>Wazuh (SIEM)</li><li>Wireshark</li><li>OPNsense</li><li>Nagios</li><li>MITRE ATT&amp;CK</li></ul>
+        </div>
+        <div class="skill-group">
+          <h3>Forense Digital</h3>
+          <ul class="chips"><li>Volatility 3</li><li>WinPmem</li><li>FTK Imager</li><li>Autopsy</li><li>TSK</li><li>binwalk</li><li>NIST SP 800-86</li><li>ISO/IEC 27037</li></ul>
+        </div>
+        <div class="skill-group">
+          <h3>Infraestrutura</h3>
+          <ul class="chips"><li>Active Directory</li><li>GPO</li><li>DNS/DHCP</li><li>Windows Server</li><li>Windows Admin Center</li><li>Hyper-V (Replica, Live Migration)</li><li>VMware ESXi</li><li>Proxmox VE</li><li>VMware Workstation</li><li>Linux</li></ul>
+        </div>
+        <div class="skill-group">
+          <h3>Backup &amp; Recuperação</h3>
+          <ul class="chips"><li>Veeam Backup &amp; Replication</li><li>Windows Server Backup</li></ul>
+        </div>
+        <div class="skill-group">
+          <h3>Scripting</h3>
+          <ul class="chips"><li>PowerShell</li><li>Python</li></ul>
+        </div>
+        </div>
+      </div>
     </section>
 
-    <section id="certificados">
-      <p class="prompt">~$ cat certificados.txt</p>
-      <p class="out"><strong class="label-accent">Certificações profissionais</strong></p>
-      <ul class="certs out">
-        <li><a class="link-plain" href="https://www.credly.com/badges/8df6ef1b-4b24-4342-822d-d12e6c65b295/linked_in_profile" target="_blank" rel="noopener">ISC2 Certified in Cybersecurity (CC)</a> <span class="status done">: aprovado</span></li>
-        <li>Microsoft SC-200 (Security Operations Analyst) <span class="status">: em preparação</span></li>
-      </ul>
-      <p class="out"><strong class="label-accent">Cursos e formação</strong></p>
-      <ul class="certs out">
-        <li><a class="link-plain" href="https://tryhackme.com/certificate/THM-J9HGJUONCI" target="_blank" rel="noopener">TryHackMe: Cyber Security 101</a> <span class="status done">: concluído</span></li>
-        <li><a class="link-plain" href="https://tryhackme.com/certificate/THM-VMQDNPASMS" target="_blank" rel="noopener">TryHackMe: Pre Security</a> <span class="status done">: concluído</span></li>
-        <li><a class="link-plain" href="https://www.coursera.org/account/accomplishments/verify/I15FJKMC2913" target="_blank" rel="noopener">Programming for Everybody (Getting Started with Python), University of Michigan</a> <span class="status done">: concluído</span></li>
-      </ul>
+    <section class="section" id="certificados">
+      <div class="container">
+        <div class="section-head"><p class="prompt">~$ cat certificados.txt</p><h2>Certificações e formação</h2></div>
+        <div class="grid">
+          <div class="cert-col">
+            <h3>Certificações profissionais</h3>
+            <div class="cert-box"><a href="https://www.credly.com/badges/8df6ef1b-4b24-4342-822d-d12e6c65b295/linked_in_profile" target="_blank" rel="noopener">ISC2 CC – Certified in Cybersecurity</a><span class="state ok">aprovado</span></div>
+            <div class="cert-box"><span>Microsoft SC-200 – Security Operations Analyst</span><span class="state">em preparação</span></div>
+          </div>
+          <div class="cert-col">
+            <h3>Cursos e formação</h3>
+            <div class="cert-row"><span>TryHackMe: SOC Level 1</span><span class="state">em curso</span></div>
+            <div class="cert-row"><a href="https://tryhackme.com/certificate/THM-J9HGJUONCI" target="_blank" rel="noopener">TryHackMe: Cyber Security 101</a><span class="state ok">concluído</span></div>
+            <div class="cert-row"><a href="https://tryhackme.com/certificate/THM-VMQDNPASMS" target="_blank" rel="noopener">TryHackMe: Pre Security</a><span class="state ok">concluído</span></div>
+            <div class="cert-row"><a href="https://www.coursera.org/account/accomplishments/verify/I15FJKMC2913" target="_blank" rel="noopener">Programming for Everybody (Python), University of Michigan</a><span class="state ok">concluído</span></div>
+            <a class="profile-link" href="https://tryhackme.com/p/mirand0" target="_blank" rel="noopener">perfil TryHackMe: mirand0 →</a>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <section id="tryhackme">
-      <p class="prompt">~$ cat tryhackme.txt</p>
-      <p class="out"><strong class="label-accent">Ranking:</strong> top 6% global</p>
-      <p class="out"><strong class="label-accent">Progresso:</strong> 85 salas · 14 badges</p>
-      <p class="out"><strong class="label-accent">Em curso:</strong> SOC Level 1</p>
-      <p class="out"><strong class="label-accent">Perfil:</strong> <a class="link-plain" href="https://tryhackme.com/p/mirand0" target="_blank" rel="noopener">tryhackme.com/p/mirand0</a></p>
+    <section class="section contact" id="contacto">
+      <div class="container">
+        <div class="contact-text">
+          <p class="prompt">~$ cat contacto.txt</p>
+          <h2>Vamos falar?</h2>
+          <p class="dim">À procura de estágio curricular ou posição júnior em cibersegurança, em Lisboa.</p>
+        </div>
+        <div class="actions">
+          <a class="btn primary mail" href="mailto:David.miranda@outlook.com">David.miranda@outlook.com</a>
+          <a class="btn" href="https://www.linkedin.com/in/davidmirand0/" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
     </section>
-
-    <section id="contacto">
-      <p class="prompt">~$ cat contacto.txt</p>
-      <p class="out warn-line">&gt; Ativamente à procura de uma primeira oportunidade profissional ou estágio curricular em cibersegurança, Lisboa.</p>
-      <p class="out"><strong class="label-accent">LinkedIn:</strong> <a class="link-plain" href="https://www.linkedin.com/in/davidmirand0/" target="_blank" rel="noopener">linkedin.com/in/davidmirand0</a></p>
-      <p class="out"><strong class="label-accent">Email:</strong> <a class="link-plain" href="mailto:David.miranda@outlook.com">David.miranda@outlook.com</a></p>
-      <p class="out"><a class="btn" href="mailto:David.miranda@outlook.com">[ &gt; mailto contacto ]</a></p>
-    </section>
-    <footer class="foot">
-      <p class="prompt">&copy; 2026 David Miranda. Todos os direitos reservados.</p>
-    </footer>
   </main>
+  <footer class="foot">© 2026 David Miranda. Todos os direitos reservados.</footer>
 </body>
 </html>
